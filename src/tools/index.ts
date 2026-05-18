@@ -5,6 +5,7 @@ import { registerBlocksTools } from './blocks.js';
 import { registerTasksTools } from './tasks.js';
 import { registerDetailsTools } from './details.js';
 import { registerSupportTools } from './support.js';
+import { registerSharesTools } from './shares.js';
 
 export function registerAllTools(server: McpServer) {
   registerProjectsTools(server);
@@ -13,4 +14,5 @@ export function registerAllTools(server: McpServer) {
   registerTasksTools(server);
   registerDetailsTools(server);
   registerSupportTools(server);
+  registerSharesTools(server);
 }

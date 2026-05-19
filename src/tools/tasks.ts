@@ -6,7 +6,7 @@ import { ok, err } from '../lib/format.js';
 export function registerTasksTools(server: McpServer) {
   server.tool(
     'list_tasks',
-    'Lista tarefas do projeto. Filtros: task_status_id, task_fase_id, task_modulo_id, task_tipo_id, task_prioridade_id. Use expand=status,fase,modulo,tipo,prioridade,details.',
+    'Lista tarefas do projeto. Filtros: task_status_id, task_fase_id, task_modulo_id, task_tipo_id, task_prioridade_id, priority_flag. Use expand=status,fase,modulo,tipo,prioridade,details.',
     {
       project: z.string(),
       task_status_id: z.number().optional(),
@@ -14,6 +14,7 @@ export function registerTasksTools(server: McpServer) {
       task_modulo_id: z.number().optional(),
       task_tipo_id: z.number().optional(),
       task_prioridade_id: z.number().optional(),
+      priority_flag: z.boolean().optional(),
       search: z.string().optional(),
       expand: z.string().optional(),
       per_page: z.number().optional().default(100),
@@ -55,7 +56,7 @@ export function registerTasksTools(server: McpServer) {
 
   server.tool(
     'create_task',
-    'Cria uma nova tarefa.',
+    'Cria uma nova tarefa. priority_flag=true marca como retrabalho/prioridade de fila.',
     {
       project: z.string(),
       title: z.string(),
@@ -66,6 +67,7 @@ export function registerTasksTools(server: McpServer) {
       task_tipo_id: z.number(),
       task_prioridade_id: z.number(),
       order: z.number().optional(),
+      priority_flag: z.boolean().optional().default(false),
     },
     async ({ project, ...body }) => {
       try {
@@ -93,6 +95,7 @@ export function registerTasksTools(server: McpServer) {
       task_prioridade_id: z.number().optional(),
       order: z.number().optional(),
       status: z.boolean().optional(),
+      priority_flag: z.boolean().optional(),
     },
     async ({ project, id, ...body }) => {
       try {

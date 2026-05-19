@@ -5,18 +5,18 @@ import { ok, err } from '../lib/format.js';
 
 export function registerSupportTools(server: McpServer) {
   const endpoints = [
-    ['list_task_statuses', 'task-statuses', 'Lista os status disponíveis para tarefas.'],
-    ['list_task_fases', 'task-fases', 'Lista as fases disponíveis.'],
-    ['list_task_modulos', 'task-modulos', 'Lista os módulos disponíveis.'],
-    ['list_task_tipos', 'task-tipos', 'Lista os tipos disponíveis.'],
-    ['list_task_prioridades', 'task-prioridades', 'Lista as prioridades disponíveis.'],
+    ['list_task_statuses', 'task-statuses', 'Lista os status disponíveis para tarefas do projeto.'],
+    ['list_task_fases', 'task-fases', 'Lista as fases disponíveis para o projeto.'],
+    ['list_task_modulos', 'task-modulos', 'Lista os módulos disponíveis para o projeto.'],
+    ['list_task_tipos', 'task-tipos', 'Lista os tipos disponíveis para o projeto.'],
+    ['list_task_prioridades', 'task-prioridades', 'Lista as prioridades disponíveis para o projeto.'],
   ] as const;
 
   for (const [name, path, desc] of endpoints) {
     server.tool(
       name,
       desc,
-      { project: z.string().describe('Slug de qualquer projeto válido (só pra auth)') },
+      { project: z.string().describe('Slug do projeto (filtra os registros pelo projeto)') },
       async ({ project }) => {
         try {
           const client = apiClient(project);

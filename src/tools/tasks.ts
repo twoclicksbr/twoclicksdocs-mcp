@@ -150,4 +150,23 @@ export function registerTasksTools(server: McpServer) {
       }
     }
   );
+
+  server.tool(
+    'bulk_move_tasks_modulo',
+    'Move múltiplas tarefas para um módulo diferente em uma única operação. Até 500 tarefas por chamada.',
+    {
+      project: z.string(),
+      task_ids: z.array(z.number()).min(1).max(500),
+      task_modulo_id: z.number(),
+    },
+    async ({ project, task_ids, task_modulo_id }) => {
+      try {
+        const client = apiClient(project);
+        const res = await client.patch('/doc/tasks/bulk-move-modulo', { task_ids, task_modulo_id });
+        return ok(handleResponse(res));
+      } catch (e: any) {
+        return err(e.message);
+      }
+    }
+  );
 }

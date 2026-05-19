@@ -109,6 +109,34 @@ export function registerTasksTools(server: McpServer) {
   );
 
   server.tool(
+    'bulk_create_tasks',
+    'Cria múltiplas tarefas em uma única requisição (batch INSERT). Até 500x mais rápido que chamadas sequenciais. Use sempre que criar 2 ou mais tarefas de uma vez.',
+    {
+      project: z.string(),
+      tasks: z.array(z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        task_status_id: z.number(),
+        task_fase_id: z.number(),
+        task_modulo_id: z.number(),
+        task_tipo_id: z.number(),
+        task_prioridade_id: z.number(),
+        priority_flag: z.boolean().optional().default(false),
+        order: z.number().optional(),
+      })).min(1).max(500),
+    },
+    async ({ project, tasks }) => {
+      try {
+        const client = apiClient(project);
+        const res = await client.post('/doc/tasks/bulk', { tasks });
+        return ok(handleResponse(res));
+      } catch (e: any) {
+        return err(e.message);
+      }
+    }
+  );
+
+  server.tool(
     'delete_task',
     'Remove uma tarefa.',
     { project: z.string(), id: z.number() },

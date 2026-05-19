@@ -6,6 +6,8 @@ import { registerTasksTools } from './tasks.js';
 import { registerDetailsTools } from './details.js';
 import { registerSupportTools } from './support.js';
 import { registerSharesTools } from './shares.js';
+import { registerAuxWriteTools } from './aux-write.js';
+import { registerUsersTools } from './users.js';
 
 export function registerAllTools(server: McpServer) {
   registerProjectsTools(server);
@@ -15,4 +17,6 @@ export function registerAllTools(server: McpServer) {
   registerDetailsTools(server);
   registerSupportTools(server);
   registerSharesTools(server);
+  registerAuxWriteTools(server);
+  registerUsersTools(server);
 }

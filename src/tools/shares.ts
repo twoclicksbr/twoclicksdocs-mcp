@@ -9,7 +9,7 @@ export function registerSharesTools(server: McpServer) {
     'Resolve um link compartilhado do painel (hash de 10 chars) e retorna o estado completo: projeto, aba ativa, filtros aplicados e recurso aberto (documento ou tarefa). Use isso quando o usuário colar um link no formato https://docs.twoclicks.com.br/painel?h=XXXXXXXXXX. Após resolver, chame get_document ou get_task com os IDs retornados se quiser ver o conteúdo.',
     {
       hash: z.string().min(8).max(15).describe('Hash do share (extraído do parâmetro ?h= da URL)'),
-      project: z.string().describe('Slug de qualquer projeto válido (smartclick360, bethel360, apdireta, clickbank, whatspanel) — só para autenticação. O share retornará o projeto real ao qual pertence.'),
+      project: z.string().describe('Slug de qualquer projeto configurado — só para autenticação. O share retornará o projeto real ao qual pertence.'),
     },
     async ({ hash, project }) => {
       try {

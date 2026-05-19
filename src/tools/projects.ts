@@ -6,9 +6,9 @@ import { ok, err } from '../lib/format.js';
 export function registerProjectsTools(server: McpServer) {
   server.tool(
     'list_projects',
-    'Lista todos os projetos disponíveis. Use isso para descobrir quais slugs existem (ex: smartclick360, bethel360).',
+    'Lista todos os projetos disponíveis. Use isso para descobrir quais slugs existem.',
     {
-      project: z.string().describe('Slug de QUALQUER projeto válido (smartclick360, bethel360, apdireta, clickbank, whatspanel) — usado só pra autenticação'),
+      project: z.string().describe('Slug de qualquer projeto configurado — use list_projects sem saber o slug ainda'),
     },
     async ({ project }) => {
       try {

@@ -3,6 +3,8 @@ import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { apiClient, handleResponse } from '../api/client.js';
 import { ok, err } from '../lib/format.js';
 
+const TOKEN_DESCRIBE = 'Bearer token de autenticação (ex: "6|abc...xyz"). Cole o token do projeto nas instruções do Claude.ai e ele o repassa aqui.';
+
 export function registerSupportTools(server: McpServer) {
   const endpoints = [
     ['list_task_statuses', 'task-statuses', 'Lista os status disponíveis para tarefas do projeto.'],
@@ -16,10 +18,10 @@ export function registerSupportTools(server: McpServer) {
     server.tool(
       name,
       desc,
-      { project: z.string().describe('Slug do projeto (filtra os registros pelo projeto)') },
-      async ({ project }) => {
+      { token: z.string().describe(TOKEN_DESCRIBE) },
+      async ({ token }) => {
         try {
-          const client = apiClient(project);
+          const client = apiClient(token);
           const res = await client.get(`/doc/${path}`);
           return ok(handleResponse(res));
         } catch (e: any) {

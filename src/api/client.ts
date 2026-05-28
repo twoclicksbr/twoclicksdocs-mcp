@@ -1,10 +1,7 @@
 import axios, { AxiosInstance } from 'axios';
 import { env } from '../config/env.js';
-import { getTokenForProject } from '../config/tokens.js';
 
-export function apiClient(projectSlug: string): AxiosInstance {
-  const token = getTokenForProject(projectSlug);
-
+export function apiClient(token: string): AxiosInstance {
   return axios.create({
     baseURL: env.apiBaseUrl,
     timeout: 30000,
